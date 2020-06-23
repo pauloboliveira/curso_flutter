@@ -5,16 +5,39 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("FastIn")),
+      appBar: AppBar(title: Text("Curso")),
       body: _body(),
     );
   }
 
   _body() {
     return Container(
-      color: Colors.white,
-      child: Center(
-        child: _img()
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          _text(),
+          _img(),
+          Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  _button("PageView"),
+                  _button("Page2"),
+                  _button("Page3"),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  _button("Snack"),
+                  _button("Dialog"),
+                  _button("Toast"),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -32,6 +55,22 @@ class HomePage extends StatelessWidget {
   }
 
   _img() {
-    return Image.asset("assets/images/dog1.png");
+    return Image.asset(
+      "assets/images/dog1.png",
+      fit: BoxFit.contain,
+    );
+  }
+
+  _button(text) {
+    return RaisedButton(
+      color: Colors.blue,
+      child: Text(text,
+          style: TextStyle(
+            color: Colors.white,
+          )),
+      onPressed: () {
+        print("ok");
+      },
+    );
   }
 }
