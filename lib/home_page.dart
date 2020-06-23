@@ -1,42 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:testeflutter/pages/hello_page1.dart';
+import 'package:testeflutter/pages/hello_page2.dart';
+import 'package:testeflutter/pages/hello_page3.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Curso")),
-      body: _body(),
+      body: _body(context),
     );
   }
 
-  _body() {
+  _body(context) {
     return Container(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           _text(),
-          _img(),
-          Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  _button("PageView"),
-                  _button("Page2"),
-                  _button("Page3"),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  _button("Snack"),
-                  _button("Dialog"),
-                  _button("Toast"),
-                ],
-              ),
-            ],
-          ),
+          _pageView(),
+          _buttons(context),
         ],
       ),
     );
@@ -54,23 +38,70 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  _img() {
+  _img(text) {
     return Image.asset(
-      "assets/images/dog1.png",
+      text,
       fit: BoxFit.contain,
     );
   }
 
-  _button(text) {
+  _button(context, text, Function onPressed) {
     return RaisedButton(
-      color: Colors.blue,
-      child: Text(text,
-          style: TextStyle(
-            color: Colors.white,
-          )),
-      onPressed: () {
-        print("ok");
-      },
+        color: Colors.blue,
+        child: Text(text,
+            style: TextStyle(
+              color: Colors.white,
+            )),
+        onPressed: onPressed);
+  }
+
+  _pageView() {
+    return Container(
+      margin: EdgeInsets.only(top: 20, bottom: 20),
+      height: 300,
+      child: PageView(
+        children: <Widget>[
+          _img("assets/images/dog1.png"),
+          _img("assets/images/dog2.png"),
+          _img("assets/images/dog3.png"),
+          _img("assets/images/dog4.png"),
+        ],
+      ),
     );
   }
+
+  _buttons(context) {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            _button(context, "PageView", () => _onClickNavigator(context, HelloPage1())),
+            _button(context, "Page2", () => _onClickNavigator(context, HelloPage2())),
+            _button(context, "Page3", () => _onClickNavigator(context, HelloPage3())),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            _button(context, "Snack", _onClickSnack),
+            _button(context, "Dialog", _onClickDialog),
+            _button(context, "Toast", _onClickToast),
+          ],
+        ),
+      ],
+    );
+  }
+
+  _onClickNavigator(context, Widget page) {
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+      return page;
+    }));
+  }
+
+  _onClickSnack() {}
+
+  _onClickDialog() {}
+
+  _onClickToast() {}
 }
