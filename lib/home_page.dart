@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:testeflutter/pages/hello_list_view.dart';
 import 'package:testeflutter/pages/hello_page1.dart';
 import 'package:testeflutter/pages/hello_page2.dart';
 import 'package:testeflutter/pages/hello_page3.dart';
+import 'package:testeflutter/utils/nav.dart';
+import 'package:testeflutter/widgets/blue_button.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -46,13 +49,7 @@ class HomePage extends StatelessWidget {
   }
 
   _button(context, text, Function onPressed) {
-    return RaisedButton(
-        color: Colors.blue,
-        child: Text(text,
-            style: TextStyle(
-              color: Colors.white,
-            )),
-        onPressed: onPressed);
+    return BlueButton(text, onPressed);
   }
 
   _pageView() {
@@ -76,17 +73,17 @@ class HomePage extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            _button(context, "PageView", () => _onClickNavigator(context, HelloPage1())),
-            _button(context, "Page2", () => _onClickNavigator(context, HelloPage2())),
-            _button(context, "Page3", () => _onClickNavigator(context, HelloPage3())),
+            BlueButton("ListView", () => _onClickNavigator(context, HelloListView())),
+            BlueButton("Page2", () => _onClickNavigator(context, HelloPage2())),
+            BlueButton("Page3", () => _onClickNavigator(context, HelloPage3())),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            _button(context, "Snack", _onClickSnack),
-            _button(context, "Dialog", _onClickDialog),
-            _button(context, "Toast", _onClickToast),
+            BlueButton("Snack", () => _onClickSnack()),
+            BlueButton("Dialog", () => _onClickDialog()),
+            BlueButton("Page3", () => _onClickToast()),
           ],
         ),
       ],
@@ -94,9 +91,7 @@ class HomePage extends StatelessWidget {
   }
 
   _onClickNavigator(context, Widget page) {
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-      return page;
-    }));
+    push(context, page);
   }
 
   _onClickSnack() {}
